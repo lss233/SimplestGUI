@@ -1,0 +1,7 @@
+name: SimplestGUI
+version: ${project.version}
+main: com.lss233.simplestgui.SimplestGUI
+api-version: 1.16
+authors: [ Lss233 ]
+softdepend:
+  - PlaceholderAPI
