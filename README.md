@@ -1,10 +1,10 @@
-# SimplestGUI
+# SimplestGUI ![](https://jitpack.io/v/com.lss233/SimplestGUI.svg)
 A simple chest gui api for Bukkit.
 
-## Provides
+## Features
 
-  1. Layout customizable GUI
-  2. Paginate GUI
+  1. [Layout customizable GUI](https://github.com/lss233/SimplestGUI/wiki/CustomGUI)
+  2. Paginated GUI
 
 ## Using  
 
