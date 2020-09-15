@@ -25,4 +25,7 @@ A simple chest gui api for Bukkit.
         <version>1.0-SNAPSHOT</version>
     </dependency>
   ```  
-2. See the [examples](src/test/java/com/lss233/simplestgui)
+2. See the [examples](src/test/java/com/lss233/simplestgui) or [wiki](https://github.com/lss233/SimplestGUI/wiki) to know how to use it.
+
+## License
+This project is under the [MIT License](LICENSE).
