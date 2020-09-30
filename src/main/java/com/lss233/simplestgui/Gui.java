@@ -32,7 +32,7 @@ public abstract class Gui implements InventoryHolder {
         this.inventoryListener = new Listener() {
             @EventHandler(ignoreCancelled = true)
             public void onInventoryClick(InventoryClickEvent event) {
-                if (event.getInventory() == null || !event.getInventory().getHolder().equals(holder)) {
+                if (event.getInventory() == null || !holder.equals(event.getInventory().getHolder())) {
                     return;
                 }
                 //if(event.getClickedInventory() == null || !event.getClickedInventory().equals(getInventory())) return;
@@ -45,7 +45,7 @@ public abstract class Gui implements InventoryHolder {
             }
             @EventHandler(ignoreCancelled = true)
             public void onInventoryClose(InventoryCloseEvent event) {
-                if (!event.getInventory().getHolder().equals(holder)) {
+                if (!holder.equals(event.getInventory().getHolder())) {
                     return;
                 }
                 unregisterListeners();
