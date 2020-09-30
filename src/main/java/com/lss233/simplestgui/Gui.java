@@ -32,16 +32,22 @@ public abstract class Gui implements InventoryHolder {
         this.inventoryListener = new Listener() {
             @EventHandler(ignoreCancelled = true)
             public void onInventoryClick(InventoryClickEvent event) {
-                if (event.getInventory() == null || !event.getInventory().getHolder().equals(holder)) return;
+                if (event.getInventory() == null || !event.getInventory().getHolder().equals(holder)) {
+                    return;
+                }
                 //if(event.getClickedInventory() == null || !event.getClickedInventory().equals(getInventory())) return;
                 event.setCancelled(true);
-                if (componentMap.containsKey(event.getSlot()) && componentMap.get(event.getSlot()) != null)
-                    if (componentMap.get(event.getSlot()).getAction() != null)
+                if (componentMap.containsKey(event.getSlot()) && componentMap.get(event.getSlot()) != null) {
+                    if (componentMap.get(event.getSlot()).getAction() != null) {
                         componentMap.get(event.getSlot()).getAction().accept((Player) event.getWhoClicked(), event.getClick());
+                    }
+                }
             }
             @EventHandler(ignoreCancelled = true)
             public void onInventoryClose(InventoryCloseEvent event) {
-                if (!event.getInventory().getHolder().equals(holder)) return;
+                if (!event.getInventory().getHolder().equals(holder)) {
+                    return;
+                }
                 unregisterListeners();
                 onClosed();
             }

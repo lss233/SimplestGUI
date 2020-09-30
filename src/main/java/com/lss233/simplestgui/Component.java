@@ -31,8 +31,12 @@ public class Component {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Component component = (Component) o;
         return itemStack.equals(component.itemStack);
     }

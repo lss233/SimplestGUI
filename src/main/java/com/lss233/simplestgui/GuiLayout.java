@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @SerializableAs("GuiLayout")
 public class GuiLayout implements ConfigurationSerializable, Cloneable {
-    private final static Pattern variablePattern = Pattern.compile("\\{([\\w.]+)}");
+    private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{([\\w.]+)}");
     private Map<String, Object> deserializedMap;
     static {
         ConfigurationSerialization.registerClass(GuiLayout.class, "GuiLayout");
@@ -74,11 +74,6 @@ public class GuiLayout implements ConfigurationSerializable, Cloneable {
             value.getEnchantments().forEach(itemStack::addUnsafeEnchantment);
             if(value.hasItemMeta()){
                 itemStack.setItemMeta(value.getItemMeta().clone());
-                /*
-                ItemMeta meta = value.getItemMeta().clone();
-                meta.setDisplayName(value.getItemMeta().getDisplayName());
-                meta.setLore(new ArrayList<>(value.getItemMeta().getLore()));
-                */
             }
         });
         layout.setTitle(((String) map.get("title")).replace('&', ChatColor.COLOR_CHAR));
@@ -104,7 +99,7 @@ public class GuiLayout implements ConfigurationSerializable, Cloneable {
                     ItemMeta meta = value.getItemMeta().clone();
                     List<String> lore = new ArrayList<>();
                     value.getItemMeta().getLore().stream().forEach(line -> {
-                        Matcher matcher = variablePattern.matcher(line);
+                        Matcher matcher = VARIABLE_PATTERN.matcher(line);
                         StringBuilder builder = new StringBuilder();
                         int i = 0;
                         while (matcher.find()) {
@@ -164,16 +159,17 @@ public class GuiLayout implements ConfigurationSerializable, Cloneable {
         ItemStack item = getWidgets().getOrDefault(identifier, null);
         ItemMeta meta = item == null ? null : item.getItemMeta().clone();
         consumer.accept(item, meta);
-        if(item != null)
+        if(item != null) {
             item.setItemMeta(meta);
+        }
         return this;
     }
     public GuiLayout updateWidget(String identifier, Map<String, String> variables) {
         ItemStack item = getWidgets().getOrDefault(identifier, null);
         ItemMeta meta = item.getItemMeta().clone();
-        if(meta.hasLore())
+        if(meta.hasLore()) {
             meta.setLore(meta.getLore().stream().map(line -> {
-                Matcher matcher = variablePattern.matcher(line);
+                Matcher matcher = VARIABLE_PATTERN.matcher(line);
                 StringBuilder builder = new StringBuilder();
                 int i = 0;
                 while (matcher.find()) {
@@ -185,10 +181,12 @@ public class GuiLayout implements ConfigurationSerializable, Cloneable {
                 builder.append(line.substring(i));
                 return builder.toString().replaceAll("&", String.valueOf(ChatColor.COLOR_CHAR));
             }).collect(Collectors.toList()));
+        }
         if(meta.hasDisplayName()) {
             final AtomicReference<String> name = new AtomicReference<>(meta.getDisplayName());
-            if (variables != null)
+            if (variables != null) {
                 variables.forEach((k, v) -> name.set(name.get().replace("{" + k + "}", v)));
+            }
             meta.setDisplayName(name.get().replace("&", String.valueOf(ChatColor.COLOR_CHAR)));
         }
         item.setItemMeta(meta);

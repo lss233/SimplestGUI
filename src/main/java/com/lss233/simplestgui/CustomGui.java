@@ -18,11 +18,13 @@ public abstract class CustomGui extends Gui{
 
     @Override
     protected void draw() {
-        getLayout().getLayoutFlat((i, _el) -> {
-            String el = _el.toString();
+        getLayout().getLayoutFlat((i, element) -> {
+            String el = element.toString();
             setComponent(i, new Component.Builder().item(getLayout().getWidgets().get(el))
                     .click((player, click) -> {
-                        if(!getLayout().getCallbacks().containsKey(el)) return;
+                        if(!getLayout().getCallbacks().containsKey(el)) {
+                            return;
+                        }
                         if(this.registeredCallbacks.containsKey(getLayout().getCallbacks().get(el))){
                             this.registeredCallbacks.get(getLayout().getCallbacks().get(el)).accept(player, click);
                         }
